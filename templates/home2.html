@@ -1,0 +1,166 @@
+{% extends "layout2.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div>
+    <form action="" method="post" name="foods" class = "home">
+
+        <div style="overflow: hidden; width: 80%; margin: auto">
+            <div style=" width: 60%; margin: auto; float: left;">
+                <table class="rate_foods">
+                <tr>
+                    <th style="text-align: center">Food</th>
+                    <th style="text-align: center">Taste</th>
+                    <th style="text-align: center">Appearance</th>
+                    <th style="text-align: center">Freshness</th>
+                </tr>
+                <tr>
+                    {% if not is_chief %}
+                    <td class="food_name"><input type="radio" id="main" name="foods" value="Corba">
+                        <label for="soupid"> {{current_m.food_names[0]}} </label>
+                    <small> <p class="info"> {{current_m.vote_counters}} votes</p></small>
+                    <small> <p class="info"> {{current_m.average_rates}} average </p></small>
+                    <small> <p class="info"> {{current_m.food_calories[0]}} calorie </p></td></small>
+                    <td rowspan="4">
+                        <input style="padding-left: 30px" type ="range" name ="Taste" min = "0" max = "5" orient="vertical" class="vertical" id="myRange">
+                    </td>
+                    <td rowspan="4">
+                        <input style="padding-left: 30px"  type ="range" name ="Appearance" min = "0" max = "5" orient="vertical" class="vertical">
+                    </td>
+                    <td rowspan="4">
+                        <input style="padding-left: 30px"  type ="range"  name ="Freshness" min = "0" max = "5" orient="vertical" class="vertical">
+                    </td>
+                    
+                    {% else %}
+                    <td class="food_name"><input type="radio" id="main" name="foods" value="Corba" disabled>
+                        <label for="soupid"> {{current_m.food_names[0]}} </label>
+                    <small> <p class="info"> {{current_m.vote_counters}} votes</p></small>
+                    <small> <p class="info"> {{current_m.average_rates}} average </p></td></small>
+                        <td rowspan="4">
+                        <input type ="range" name ="Taste" min = "0" max = "5" disabled>
+                    </td>
+                    <td rowspan="4">
+                        <input type ="range" name ="Appearance" min = "0" max = "5" disabled>
+                    </td>
+                    <td rowspan="4">
+                        <input type ="range"  name ="Freshness" min = "0" max = "5" disabled>
+                    </td> 
+                    {% endif %}
+                </tr>
+                <tr>
+                 {% if not is_chief %}
+                    <td class="food_name"><input type="radio" id="main" name="foods" value="Main Course">
+                 {% else %}
+                    <td class="food_name"><input type="radio" id="main" name="foods" value="Main Course" disabled>
+                 {% endif %}
+                        <label for="main"> {{current_m.food_names[1]}} </label>
+                        <small><p class="info">{{current_m.vote_counterm}} votes</p></small>
+                        <small> <p class="info">{{current_m.average_ratem}} average</p></small>
+                        <small> <p class="info"> {{current_m.food_calories[1]}} calorie </p></td></small>
+                </tr>
+                <tr>
+                {% if not is_chief %}
+                    <td class="food_name"><input type="radio" id="ara" name="foods" value="Ara Yemek">
+                {% else %}
+                    <td class="food_name"><input type="radio" id="ara" name="foods" value="Ara Yemek" disabled>
+                {% endif %}
+                        <label for="ara"> {{current_m.food_names[2]}} </label>
+                        <small> <p class="info">{{current_m.vote_countera}} votes</p></small>
+                        <small> <p class="info">{{current_m.average_ratea}} average</p></small>
+                        <small> <p class="info"> {{current_m.food_calories[2]}} calorie </p></td></small>
+                </tr>
+                <tr>
+                {% if not is_chief %}
+                    <td class="food_name"><input type="radio" id="tatli" name="foods" value="Tatli">
+                {% else %}
+                    <td class="food_name"><input type="radio" id="tatli" name="foods" value="Tatli" disabled>
+                {% endif %}
+                        <label for="tatli"> {{current_m.food_names[3]}} </label>
+                    <small> <p class="info">{{current_m.vote_counterd}} votes</p></small>
+                        <small><p class="info">{{current_m.average_rated}} average</p></small>
+                        <small> <p class="info"> {{current_m.food_calories[3]}} calorie </p></td></small>
+                </tr>
+                </table>
+
+            </div>
+            <div style="margin-top: 7px; width: 350px; height: 600px; background-color: #f3f3f3; float: right">
+                <div style="box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.24); height: 45px; background-color: #678f69; color: white; font-weight: 500;">
+                    <p style="padding-top: 13px; padding-left: 130px; margin: auto"> Comments</p>
+                </div>
+                <div style="height: 400px; overflow-y: scroll; overflow-x: hidden;">
+                   {% if chief_comments %}
+                    {% for chief_comment in chief_comments %}
+                    <div style="padding: 10px; border-bottom: 1px solid #d4cdcd">
+                        <br>
+                        <p style="display: inline; font-weight: bold">Chief {{chief_comment[1]}}: </p>
+                        <p style="display: inline">{{chief_comment[0]}}</p>
+                        <br>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% if comments %}
+                    {% for comment in comments %}
+                    <div style="padding: 10px; border-bottom: 1px solid #d4cdcd">
+                        <br>
+                        <p style="display: inline; font-weight: bold">{{comment[1]}}: </p>
+                        <p style="display: inline">{{comment[0]}}</p>
+                        <br>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+                <textarea style="margin: auto; margin-left: 20px; margin-top: 25px; resize: none" id = "comment" name="Comment_" rows="7" cols="40"></textarea>
+
+            </div>
+            
+        </div>
+        <div style="margin-left: 150px; width: 780px; margin-top: -100px"> 
+            <div style="border-bottom-left-radius: 15px; border-top-left-radius: 15px; height: 45px; background-color: #678f69; color: white; font-weight: 500; width: 215px; float: left">
+                <p style="text-align: center"> Overall Score of Meal</p>
+            </div>
+            <div style="background-color: #f3f3f3; width: 550px; height: 50px; float: left; border-bottom-right-radius: 15px; border-top-right-radius: 15px;">
+            {% if not is_chief %}
+             <input id="overall" style="padding-top: 30px; margin-left: 40px; width: 280px"  type="range" name="Overall" min = "0" max = "10" >
+            {% else %}
+             <input id="overall" style="padding-top: 30px; margin-left: 40px; width: 280px"  type="range" name="Overall" min = "0" max = "10" disabled>
+             {% endif %}
+                <p style="display: inline; padding-left: 30px;">
+                    Avg : {{current_m.score}} /10 
+                </p>
+             </div>
+        </div>
+
+
+
+        
+        <button class="show">
+            Vote
+        </button>
+    </form>
+    </div>  
+    <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("overall").defaultValue = -1;
+        });
+
+
+
+
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+        panel.style.display = "none";
+        } else {
+        panel.style.display = "block";
+        }
+    });
+}
+    </script>
+{% endblock %}
+

@@ -1,0 +1,205 @@
+{% extends "layout2.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="profile_page">
+    <div class="hexagon">
+        <ul>
+            <th>{{username}}</th>
+            <li> You voted {{my_votes}} foods.</li>
+            <li> You commented {{my_comments|length}} times.</li>
+            <li> Average rate of votes = {{average_rate}}</li>
+        </ul>
+    </div>
+    <div class = "best_foods" style="margin-top: -150px;">
+        <th>Best Foods Ever </th>
+        <ul>
+            <li> {{best_foods[0][0]}}  rate: <small>{{best_foods[0][1]}}</small> </li>
+            <li> {{best_foods[1][0]}}  rate: {{best_foods[1][1]}}</li>
+            <li> {{best_foods[2][0]}}  rate: {{best_foods[2][1]}}</li>
+            <li> {{best_foods[3][0]}}  rate: {{best_foods[3][1]}}</li>
+        </ul>
+    </div>
+    <div style="height: 30%">
+    <div class = "grid-1-5" style="float:right; margin-top: -350px; width:30%">
+        <form action="" method="post">
+            <label>Begin:</label>
+                <input type="date" name="begin" required>
+            <label>End:</label>
+                <input type="date" name="end" required>
+            <label for="Sort_tye">Sort by:</label>
+                <select id="Sort_type" name="sorts">
+                    <option value="average">Score</option>
+                    <option value="date_">Date</option>
+                    <option value="rate_counter">Vote Amount</option>
+                <input type="submit">
+        </form>
+    </div>
+    {% if meals %}
+        <div class="grid-1-5" style="float:right; margin-top: -300px;">
+            <ul>
+            {% for meal in meals %}
+                <li><a href="{{ url_for('meal_page', meal_id = meal) }}">{{meal}}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    </div>
+    <div class="propose_meal" style="margin-left: 400px; margin-top: 100px">
+        <form action="" method="post">
+        <ul>
+        <li><input type="search" name="Soup" placeholder="Soup" id="myInput" required />
+        <li><input type="search" name="Main Course" placeholder="Main Course" id="myInput1" required/> 
+        <li><input type="search" name="Yan Yemek" placeholder="Yan Yemek" id="myInput2" required/> 
+        <li><input type="search" name="Tatli" placeholder="Desert" id="myInput3" required/>
+        <ul>
+        <input type="submit">
+        </form>
+    </div>
+    <div id="suggestions" style="margin-left: 650px;">
+    </div>
+    {% if my_comments %}
+    <div class="dropdown" >
+        <button class="dropbtn" style = "margin-left:-800px; margin-top:-100px;">Comments</button>
+        <form action="" method="post" name="comment_keys">
+        <div class="dropdown-content" style = "margin-left:-800px; margin-top:0px;">
+        {% for comment in my_comments %}
+            <p class="accordion"><input type="checkbox" name="comment_id" value="{{comment[0]}}">Comment</p>
+            <div class="panel">     
+                <p>{{comment[1]}} <a style = "margin-left:150px;" href="{{ url_for('meal_page', meal_id = comment[2]) }}">More Detail</a></p>
+            </div>
+        {% endfor %}
+        <button class="delete">Delete</button>
+        </div>
+    
+  </form>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+
+    function makeUL(array) {
+        // Create the list element:
+        var list = document.createElement('ul');
+
+        for(var i = 0; i < array.length; i++) {
+            // Create the list item:
+            var item = document.createElement('li');
+
+            // Set its contents:
+            
+            item.appendChild(document.createTextNode(array[i]));
+            
+            list.appendChild(item);
+        }
+
+        // Finally, return the constructed list:
+        document.getElementById('suggestions').innerHTML = "";
+        console.log(list);
+        document.getElementById('suggestions').appendChild(list);
+        //return list;
+    }
+
+    myInput.addEventListener("input", function (e) {
+        var suggestions = []
+        console.log(this.value);
+        $.post('/_give_suggestions', {
+            //data: this.value
+            data:  this.value,
+            category: this.name
+        }).done(function(response) {
+            suggestions = response["data"]
+            makeUL(suggestions)
+            // is_likeds[0] = true
+        }).fail(function() {
+            alert("could not like");
+        });
+    });
+     myInput1.addEventListener("input", function (e) {
+        var suggestions = []
+        console.log(this.value);
+        $.post('/_give_suggestions', {
+            //data: this.value
+            data:  this.value,
+            category: this.name
+        }).done(function(response) {
+            suggestions = response["data"]
+            makeUL(suggestions)
+            // is_likeds[0] = true
+        }).fail(function() {
+            alert("could not like");
+        });
+    });
+    myInput2.addEventListener("input", function (e) {
+        var suggestions = []
+        console.log(this.value);
+        $.post('/_give_suggestions', {
+            //data: this.value
+            data:  this.value,
+            category: this.name
+        }).done(function(response) {
+            suggestions = response["data"]
+            makeUL(suggestions)
+            // is_likeds[0] = true
+        }).fail(function() {
+            alert("could not like");
+        });
+    });
+    myInput3.addEventListener("input", function (e) {
+        var suggestions = []
+        console.log(this.value);
+        $.post('/_give_suggestions', {
+            //data: this.value
+            data:  this.value,
+            category: this.name
+        }).done(function(response) {
+            suggestions = response["data"]
+            makeUL(suggestions)
+            // is_likeds[0] = true
+        }).fail(function() {
+            alert("could not like");
+        });
+    });
+
+var acc = document.getElementsByClassName("accordion");
+var i;
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+
+    </script>
+{% endblock %}
+
+    <div class="hexagon">
+
+
+    <div class = "best_foods">
+    <div class="propose_meal">
+        <div id="suggestions">
+            <div class="dropdown">
+
+<div class="dropdown" >
+        <button class="dropbtn">Dropdown</button>
+        <form action="" method="post" name="comment_keys">
+        <div class="dropdown-content">
+        {% for comment in my_comments %}
+            <p class="accordion"><input type="checkbox" name="comment_id" value="{{comment[0]}}">Comment</p>
+            <div class="panel">     
+                <p>{{comment[1]}}</p>
+            </div>
+        {% endfor %}
+        <button class="delete">Delete</button>
+        </div>

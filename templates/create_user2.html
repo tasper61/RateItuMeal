@@ -1,0 +1,47 @@
+{% extends "layout2.html" %}
+{% block title %}Create Account{% endblock %}
+{% block content %}
+{% if current_user.is_authenticated %}
+          <h1>You already have an account</h1>
+    {% else %}
+    <div class="login_page">
+    <form action="" method="post" name="create_user" class="login">
+        {{  form.csrf_token  }}
+        <div>
+          <div>
+            {{ form.username(required=True, autofocus=True,
+                             class='user',
+                             placeholder='username') }}
+          </div>
+          {% for error in form.username.errors %}
+            <p>
+                {{ error }}
+            </p>
+          {% endfor %}
+        </div>
+
+        <div>
+          <div>
+            {{ form.password(required=True, class='user',
+                             placeholder='password') }}
+          </div>
+          {% for error in form.password.errors %}
+            <p>
+                {{ error }}
+            </p>
+          {% endfor %}
+        </div>
+        <div>
+        <input type="radio" id="student" name="type" value="Student" required>
+            <label for="student"> Student </label>
+        <input type="radio" id="chief" name="type" value="Chief">
+            <label for="chief"> chief </label>
+        </div>
+        <button class="login">
+          Create
+        </button>
+        </div>
+    </form>
+    {% endif %}
+{% endblock %}
+

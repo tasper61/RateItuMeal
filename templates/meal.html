@@ -1,0 +1,85 @@
+{% extends "layout2.html" %}
+{% block title %}Meal{% endblock %}
+{% block content %}
+<div class ="meal" >
+    <div class = "graph">
+        <canvas id="chart"></canvas>
+        <canvas id="chart2"></canvas>
+        <script>
+        var ctx = document.getElementById('chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['{{current_m.food_names[0]}}','{{current_m.food_names[1]}}','{{current_m.food_names[2]}}','{{current_m.food_names[3]}}','Overall'],
+                datasets: [{
+                    label: 'Average Rate',
+                    borderColor: "#2aa5eb",
+                    borderWidth: 1,
+                    data:[{{current_m.average_rates}}, {{current_m.average_ratem}}, {{current_m.average_ratea}},{{current_m.average_rated}},{{current_m.score}},0],
+                    fill: false
+                },{
+                    data:[{{current_m.vote_counters}}, {{current_m.vote_counterm}}, {{current_m.vote_countera}},{{current_m.vote_counterd}},{{current_m.score_vote_count}}],
+                        fill: false,
+                        label: 'Vote_Counter',
+                        borderColor: "#FF0000",
+                        borderWidth:1
+                }
+                ],
+            }
+        });
+
+
+        var ctx = document.getElementById('chart2').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['{{current_m.food_names[0]}}','{{current_m.food_names[1]}}','{{current_m.food_names[2]}}','{{current_m.food_names[3]}}'],
+                datasets: [{
+                    label: 'Calorie',
+                    borderColor: "#2aa5eb",
+                    borderWidth: 1,
+                    data:[{{current_m.food_calories[0]}}, {{current_m.food_calories[1]}}, {{current_m.food_calories[2]}},{{current_m.food_calories[3]}},5,0],
+                    fill: false
+                },
+                ],
+            }
+        });
+        </script>
+        </div>
+    <form action="" method="post" name="meal_comments">
+        <div style="margin-left:700px ; margin-top:-540px;width: 350px; height: 500px; background-color: #f3f3f3;">
+            <div style="box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.24); height: 45px; background-color: #678f69; color: white; font-weight: 500;">
+                <p style="padding-top: 13px; padding-left: 130px; margin: auto"> Comments</p>
+            </div>
+            <div style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
+                {% if chief_comments %}
+                {% for chief_comment in chief_comments %}
+                <div style="padding: 10px; border-bottom: 1px solid #d4cdcd">
+                    <br>
+                    <p style="display: inline; font-weight: bold">Chief {{chief_comment[1]}}: </p>
+                    <p style="display: inline">{{chief_comment[0]}}</p>
+                    <br>
+                    </div>
+                {% endfor %}
+                {% endif %}
+
+                {%if comments%}
+                {% for comment in comments %}
+                <div style="padding: 10px; border-bottom: 1px solid #d4cdcd">
+                    <br>
+                    <p style="display: inline; font-weight: bold">{{comment[1]}}: </p>
+                    <p style="display: inline">{{comment[0]}}</p>
+                    <br>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <textarea style="margin: auto; margin-left: 20px; margin-top: 25px; resize: none" id = "comment" name="Comment_" rows="7" cols="40"></textarea>
+        </div>
+        <button class="show">
+            Vote
+        </button>
+    </form>
+</div>
+
+{% endblock %}

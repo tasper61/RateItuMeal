@@ -1,0 +1,64 @@
+{% extends "layout2.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div class="home_page">
+    <form action="" method="post" name="foods" class="home">
+
+        <div style="background-color: red">
+            
+            <div class="grid-1-5">
+                <h2>{{current_m.food_names[0]}}</h2>
+                <ul>
+                    <li class="info"> {{current_m.vote_counters}} votes</li>
+                    <li class="info"> {{current_m.average_rates}} average</li>
+                </ul>
+                <input type="radio" name="foods" value="Corba">
+            </div>
+            <div class="grid-1-5">
+                <h2>{{current_m.food_names[1]}}</h2>
+                <ul>
+                    <li>{{current_m.vote_counterm}} votes</li>
+                    <li>{{current_m.average_ratem}} average</li>
+                </ul>
+                <input type="radio" name="foods" value="Main Course">
+            </div>
+            <div class="grid-1-5">
+                <h2>{{current_m.food_names[2]}}</h2>
+                <ul>
+                    <li>{{current_m.vote_countera}} votes</li>
+                    <li>{{current_m.average_ratea}} average</li>
+                </ul>
+                <input type="radio" name="foods" value="Ara Yemek">
+            </div>
+            <div class="grid-1-5">
+                <h2>{{current_m.food_names[3]}}</h2>
+                <ul>
+                    <li>{{current_m.vote_counterd}} votes</li>
+                    <li>{{current_m.average_rated}} average</li>
+                </ul>
+                <input type="radio" name="foods" value="Tatli">
+            </div>
+            <div class="grid-1-5-">
+            as
+            </div>
+        </div>
+
+
+        <div style="background-color: red">
+            <div class="slidecontainer">
+                <h2>Taste</h2>
+                <input type ="range" name ="Taste" min = "0" max = "5" class="slider">
+            </div>
+            <div class="slidecontainer">
+                <h2>Appearance</h2>
+                <input type ="range" name ="Appearance" min = "0" max = "5" class="slider">
+            </div>
+            <div class="slidecontainer">
+                <h2>Freshness</h2>
+                <input type ="range" name ="Freshness" min = "0" max = "5" class="slider">
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+

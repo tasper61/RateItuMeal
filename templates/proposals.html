@@ -1,0 +1,92 @@
+{% extends "layout2.html" %}
+{% block title %}Meal{% endblock %}
+{% block content %}
+<div class = "proposals_page">
+    <form action="" method="post" name="proposals">
+        <div style="height: 600px; overflow-y: scroll; overflow-x: hidden; ">
+            {% for i in range(list | length) %} 
+                {% if i == 0 %}
+                    {% set divname= "abcdefgh" %}
+                {% else %}
+                    {% set divname = "grid-1-5" %}
+                {% endif %}
+                <div>
+                    <div>
+                    <p style="font-size: Large;">By {{list[i][1]}} <a style = "margin-left:150px;" href="{{ url_for('meal_page', meal_id = list[i][0].id) }}">More Detail</a></p>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="{{divname}}">
+                        <h2>{{list[i][0].food_names[0]}}</h2>
+                        <ul>
+                            <li class="info"> {{list[i][0].vote_counters}} votes</li>
+                            <li class="info"> {{list[i][0].average_rates}} average</li>
+                            <li class="info"> {{list[i][0].food_calories[0]}} calorie</li>
+                        </ul>
+                    </div>
+                    <div class="{{divname}}">
+                        <h2>{{list[i][0].food_names[1]}}</h2>
+                        <ul>
+                            <li class="info"> {{list[i][0].vote_counterm}} votes</li>
+                            <li class="info"> {{list[i][0].average_ratem}} average</li>
+                            <li class="info"> {{list[i][0].food_calories[1]}} calorie</li>
+                        </ul>
+                    </div>
+                    <div class="{{divname}}">
+                        <h2>{{list[i][0].food_names[2]}}</h2>
+                        <ul>
+                            <li class="info"> {{list[i][0].vote_countera}} votes</li>
+                            <li class="info"> {{list[i][0].average_ratea}} average</li>
+                            <li class="info"> {{list[i][0].food_calories[2]}} calorie</li>
+                        </ul>
+                    </div>
+                    <div class="{{divname}}">
+                        <h2>{{list[i][0].food_names[3]}}</h2>
+                        <ul>
+                            <li class="info"> {{list[i][0].vote_counterd}} votes</li>
+                            <li class="info"> {{list[i][0].average_rated}} average</li>
+                            <li class="info"> {{list[i][0].food_calories[3]}} calorie</li>
+                        </ul>
+                    </div>
+                    <div class="grid-1-5-">
+                        &nbsp
+                            <div style="float: left;">
+                                <input type="radio" name="rdio" id='asd{{i}}' value="{{list[i][0].id}}" onClick="goFurther({{i}})" >
+                            </div>
+                            <div style="float:left;">
+                                <input id="{{i}}" style="padding-top: 30px; margin-left: 40px; width: 280px"  type="range" name="Overall" min = "0" max = "10" disabled >
+                            </div>
+                            Score: {{list[i][0].score}}                   
+                    </div>
+                    <button style="width: 10%; margin-left: 40px; margin-top: 10px;" > Vote </button>
+                    <div>
+                        <p style="font-size: large">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;</p>
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </form>
+
+</div>
+<script>
+function alldisabled(){
+    var i = 0
+    while(true){
+        if(document.getElementById(i)){
+            document.getElementById(i).disabled = true;
+        }
+        else{
+            break;
+        }
+        i=i+1;
+    }
+}
+function goFurther(i){
+    console.log(i)
+    alldisabled()
+    var val = document.getElementById(i).disabled = false;
+}
+</script>
+
+
+{% endblock %}

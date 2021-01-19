@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='visuals.css') }}"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+<div class="header">
+    <h1>Rate Itu Foods</h1>
+</div>
+<div class="vernav">    
+    <ul>
+    {% if current_user.is_authenticated %}
+    <li><a href="{{ url_for('profile_page') }}" class="lay_out">Profile</a></li>
+    <li><a href = "{{ url_for('home_page') }}" class = "lay_out">Home</a></li>
+    <li><a href = "{{ url_for('proposals_page') }}" class = "lay_out">Proposals</a></li>
+    <li><a id ="lout"href="{{ url_for('logout_page') }}">Log out</a></li>
+    {% endif %}
+    {% if not current_user.is_authenticated %}
+    <li><a href="{{ url_for('login_page') }}" class="lay_out">Log in</a></li>
+    <li><a href="{{ url_for('create_user_page') }}" class = "lay_out">Create Account</a></li>
+    {% endif %}
+    </ul>
+</div>
+{% for message in get_flashed_messages() %}
+        <div class="flash_message">{{ message }}</div>
+    {% endfor %}
+{% block content %}{% endblock %}
+
+
+<script type=text/javascript src="{{
+  url_for('static', filename='jquery.js') }}">
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+
+</body>
+</html>
