@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from flask import flash
 
 class Database:
-    def __init__(self, host="localhost", user="root", passwd="Bitlitencere.6", db="mydb"):
+    def __init__(self, host="", user="", passwd="", db=""):
         self.host = host
         self.user = user
         self.passwd = passwd
